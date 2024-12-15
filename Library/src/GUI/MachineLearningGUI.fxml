@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<VBox spacing="10" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="GUI.MainController">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- File Selection -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="filePathField" promptText="Select input file" HBox.hgrow="ALWAYS"/>
+        <Button text="Browse" onAction="#handleBrowseButton"/>
+    </HBox>
+
+    <!-- Classifier Selection -->
+    <VBox spacing="5">
+        <Label text="Select Classifier:"/>
+        <ComboBox fx:id="classifierComboBox" maxWidth="Infinity">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="K-Nearest Neighbors"/>
+                    <String fx:value="Logistic Regression"/>
+                    <String fx:value="Decision Tree"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </VBox>
+
+    <!-- Model Configuration -->
+    <TitledPane text="Model Configuration" expanded="true">
+        <VBox spacing="10">
+            <!-- KNN Configuration -->
+            <VBox fx:id="knnConfig" spacing="5" managed="false" visible="false">
+                <Label text="K value:"/>
+                <Spinner fx:id="kValueSpinner"/>
+                <Label text="Distance Metric:"/>
+                <ComboBox fx:id="distanceMetricComboBox">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Euclidean"/>
+                            <String fx:value="Manhattan"/>
+                            <String fx:value="Weighted Normalized Euclidean"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </VBox>
+
+            <!-- Logistic Regression Configuration -->
+            <VBox fx:id="logisticConfig" spacing="5" managed="false" visible="false">
+                <Label text="Learning Rate:"/>
+                <Spinner fx:id="learningRateSpinner"/>
+                <Label text="Epochs:"/>
+                <Spinner fx:id="epochsSpinner"/>
+            </VBox>
+
+            <!-- Decision Tree Configuration -->
+            <VBox fx:id="treeConfig" spacing="5" managed="false" visible="false">
+                <Label text="Decision Tree has no configurable parameters"/>
+            </VBox>
+        </VBox>
+    </TitledPane>
+
+    <!-- Train-Test Split -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Train-Test Split:"/>
+        <Slider fx:id="splitSlider" min="0" max="100" value="80"
+                showTickLabels="true" showTickMarks="true" majorTickUnit="20"/>
+        <Label fx:id="splitLabel" text="80%"/>
+    </HBox>
+
+    <!-- Training Button -->
+    <Button text="Train and Evaluate Model" onAction="#handleTrainButton"
+            maxWidth="Infinity" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+
+    <!-- Results Area -->
+    <TitledPane text="Results" expanded="true">
+        <VBox spacing="10">
+            <TextArea fx:id="resultsArea" editable="false" prefRowCount="6"
+                      wrapText="true"/>
+
+            <!-- Confusion Matrix -->
+            <TitledPane text="Confusion Matrix" expanded="true">
+                <GridPane fx:id="confusionMatrixGrid" alignment="CENTER"
+                          hgap="10" vgap="10">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                </GridPane>
+            </TitledPane>
+        </VBox>
+    </TitledPane>
+</VBox>
